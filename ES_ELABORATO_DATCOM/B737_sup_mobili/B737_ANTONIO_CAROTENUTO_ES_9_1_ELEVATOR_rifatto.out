@@ -1,0 +1,954 @@
+ THIS SOFTWARE AND ANY ACCOMPANYING DOCUMENTATION
+ IS RELEASED "AS IS".  THE U.S. GOVERNMENT MAKES NO
+ WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, CONCERNING
+ THIS SOFTWARE AND ANY ACCOMPANYING DOCUMENTATION,
+ INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OF
+ MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+ IN NO EVENT WILL THE U.S. GOVERNMENT BE LIABLE FOR ANY
+ DAMAGES, INCLUDING LOST PROFITS, LOST SAVINGS OR OTHER
+ INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE 
+ USE, OR INABILITY TO USE, THIS SOFTWARE OR ANY
+ ACCOMPANYING DOCUMENTATION, EVEN IF INFORMED IN ADVANCE
+ OF THE POSSIBILITY OF SUCH DAMAGES.
+
+
+
+
+
+
+
+
+                                        ****************************************************
+                                        *    USAF STABILITY AND CONTROL  DIGITAL DATCOM    *
+                                        *    PROGRAM REV. JAN 96   DIRECT INQUIRIES TO:    *
+                                        *   WRIGHT LABORATORY  (WL/FIGC)  ATTN: W. BLAKE   *
+                                        *         WRIGHT PATTERSON AFB, OHIO  45433        *
+                                        *    PHONE (513) 255-6764,   FAX (513) 258-4054    *
+                                        ****************************************************
+1                         CONERR - INPUT ERROR CHECKING
+0 ERROR CODES - N* DENOTES THE NUMBER OF OCCURENCES OF EACH ERROR
+0 A - UNKNOWN VARIABLE NAME
+0 B - MISSING EQUAL SIGN FOLLOWING VARIABLE NAME
+0 C - NON-ARRAY VARIABLE HAS AN ARRAY ELEMENT DESIGNATION - (N)
+0 D - NON-ARRAY VARIABLE HAS MULTIPLE VALUES ASSIGNED
+0 E - ASSIGNED VALUES EXCEED ARRAY DIMENSION
+0 F - SYNTAX ERROR
+
+0******************************  INPUT DATA CARDS  ******************************
+
+ DIM M                                                                           
+ DERIV RAD                                                                       
+ DAMP                                                                            
+ PART                                                                            
+  $FLTCON LOOP=2.0,                                                              
+          NMACH=1.0, MACH(1)=0.1,                                                
+          NALT=1.0, ALT(1)=5000.0,                                               
+          NALPHA=20.0,                                                           
+    ALSCHD(1)= -16.0, -8.0, -6.0, -4.0, -2.0, 0.0, 2.0, 5.0, 9.0, 12.0,          
+          15.0, 18.0, 20.0, 22.0, 24.0, 26.0, 27.0, 28.0, 29.0, 30.0,            
+          STMACH=0.6, TSMACH=1.4, TR=1.0$                                        
+  $OPTINS SREF=510.90, CBARR=8.32, BLREF=59.74$                                  
+  $SYNTHS XCG=31.5211, ZCG=4.5, XW=18.27, ZW=2.7586, ALIW=2.8, XH=56.9532,       
+          ZH=6.8961, ALIH=0.0, XV=54.6816, ZV=8.9916, SCALE=1.0,VERTUP=.TRUE.$   
+  $BODY NX=20.0, BNOSE=2.0, BTAIL=2.0, BLN=23.091, BLA=19.304, ITYPE=3.0,        
+     X(1)= 0.000,2.309,4.618,6.927,9.236,11.545,13.855,16.164,18.473,20.782,     
+        23.091,23.120,42.424,46.169,49.914,53.659,57.403,61.148,67.816,68.637,   
+        R(1)= 0.000,1.588,2.197,2.619,2.911,3.118,3.232,3.253,3.253,3.253,3.253, 
+        3.253,3.253,3.253,3.221,2.934,2.381,1.721,0.464,0.000,                   
+        ZU(1)=5.629,7.468,8.769,9.881,10.030,10.043,9.957,9.798,9.585,9.322,8.995
+        8.995,8.995,8.995,9.006,9.103,9.052,9.014,9.185,8.144,                   
+        ZL(1)=5.629,3.924,3.200,2.737,2.457,2.286,2.197,2.184,2.184,2.184,2.184, 
+        2.184,2.184,2.362,2.902,3.680,4.489,5.280,6.683,8.144$                   
+  $HTPLNF CHRDTP=2.4638, SSPNE=10.4288, SSPN=11.0865, CHRDR=9.8552,              
+          SAVSI=37.0, CHSTAT=0.25, DHDADI=8.5, TYPE=1.0$                         
+ NACA-H-6-63A008                                                                 
+  $SYMFLP FTYPE=1.0, NDELTA=3.0,                                                 
+          DELTA=-20.0,0.0,20.0,                                                  
+          PHETE=0.0005077, PHETEP=0.0003827, CHRDFI=2.8144, CHRDFO=0.7239,       
+          SPANFI=1.1404, SPANFO=9.4171$                                          
+ CASEID ELEVATOR: BOEING 747                                                     
+ NEXT CASE                                                                       
+ DIM M                                                                           
+ DERIV RAD                                                                       
+ DAMP                                                                            
+ PART                                                                            
+  $FLTCON LOOP=2.0,                                                              
+          NMACH=1.0, MACH(1)=0.1,                                                
+          NALT=1.0, ALT(1)=5000.0,                                               
+          NALPHA=20.0,                                                           
+    ALSCHD(1)= -16.0, -8.0, -6.0, -4.0, -2.0, 0.0, 2.0, 5.0, 9.0, 12.0,          
+          15.0, 18.0, 20.0, 22.0, 24.0, 26.0, 27.0, 28.0, 29.0, 30.0,            
+          STMACH=0.6, TSMACH=1.4, TR=1.0$                                        
+  $OPTINS SREF=510.90, CBARR=8.32, BLREF=59.74$                                  
+  $SYNTHS XCG=31.5211, ZCG=4.5, XW=18.27, ZW=2.7586, ALIW=2.8, XH=56.9532,       
+          ZH=6.8961, ALIH=0.0, XV=54.6816, ZV=8.9916, SCALE=1.0,VERTUP=.TRUE.$   
+  $BODY NX=20.0, BNOSE=2.0, BTAIL=2.0, BLN=23.091, BLA=19.304, ITYPE=3.0,        
+     X(1)= 0.000,2.309,4.618,6.927,9.236,11.545,13.855,16.164,18.473,20.782,     
+        23.091,23.120,42.424,46.169,49.914,53.659,57.403,61.148,67.816,68.637,   
+        R(1)= 0.000,1.588,2.197,2.619,2.911,3.118,3.232,3.253,3.253,3.253,3.253, 
+        3.253,3.253,3.253,3.221,2.934,2.381,1.721,0.464,0.000,                   
+        ZU(1)=5.629,7.468,8.769,9.881,10.030,10.043,9.957,9.798,9.585,9.322,8.995
+        8.995,8.995,8.995,9.006,9.103,9.052,9.014,9.185,8.144,                   
+        ZL(1)=5.629,3.924,3.200,2.737,2.457,2.286,2.197,2.184,2.184,2.184,2.184, 
+        2.184,2.184,2.362,2.902,3.680,4.489,5.280,6.683,8.144$                   
+  $WGSCHR TCEFF=0.1, TYPEIN=2.0, NPTS=50.0,                                      
+          XCORD=0.0,0.0001,0.0002,0.0004,0.0008,0.0014,0.002,0.003,0.004,0.005,0.
+          0.008,0.010,0.012,0.014,0.020,0.026,0.032,0.04,0.05,0.06,0.07,0.08,    
+          0.10,0.12,0.14,0.16,0.19,0.22,0.26,0.30,0.35,0.40,0.45,0.50,0.55,0.60, 
+          0.65,0.70,0.74,0.78,0.82,0.86,0.90,0.93,0.95,0.97,0.98,0.99,1.0,       
+          MEAN= 0.0000000,0.0000300,0.0000500,0.0000250,0.0000260,0.0000400,0.000
+          0.0000200,-0.0000045,-0.0000845,-0.0001345,-0.0002100,-0.0002840,      
+          -0.0003200,-0.0004195,-0.0006595,-0.0008000,-0.0009300,-0.0010345,     
+          -0.0010945,-0.0010945,-0.0010300,-0.0009245,-0.0006100,-0.0002095,     
+          0.0001955,0.0006050,0.0011755,0.0017150,0.0024500,0.0032505,0.0041905, 
+          0.0052705,0.0064705,0.0078755,0.0095150,0.0114105,0.0134455,0.0153960, 
+          0.0165255,0.0172760,0.0170555,0.0156655,0.0129350,0.0099805,0.0075850, 
+          0.0048805,0.0034155,0.0018800,0.0002700,                               
+          THICK=0.0000000,0.0033000,0.0051000,0.0071300,0.0099500,0.0130600,0.015
+          0.0187400,0.0212290,0.0234290,0.0252890,0.0283800,0.0309500,0.0331200, 
+          0.0351790,0.0402390,0.0443200,0.0479600,0.0522290,0.0568910,0.0609890, 
+          0.0646400,0.0679290,0.0735600,0.0781790,0.0820310,0.0852300,0.0891690, 
+          0.0923300,0.0957000,0.0981210,0.1001410,0.1006990,0.0996990,0.0969310, 
+          0.0922100,0.0854390,0.0766890,0.0661500,0.0569710,0.0468300,0.0367490, 
+          0.0313310,0.0258700,0.0199610,0.0151700,0.0097610,0.0068310,0.0037600, 
+          0.0013600$                                                             
+  $WGPLNF CHRDTP=4.064,  SSPNE=26.5704,  SSPN=29.8216,  CHRDR=14.0663,           
+          SAVSI=40.76,                                                           
+          CHSTAT=0.0, TWISTA=-3.5, DHDADI=7.0, TYPE=1.0$                         
+  $SYMFLP FTYPE=2.0,    NDELTA=1.0,                                              
+          DELTA(1)=15.0,                                                         
+          PHETE=0.0522, PHETEP=0.0391,                                           
+          CHRDFI=3.66,   CHRDFO=2.93,                                            
+          SPANFI=4.0,  SPANFO=12.5,                                              
+          NTYPE=1.0$                                                             
+  $HTPLNF CHRDTP=2.4638, SSPNE=10.4288, SSPN=11.0865, CHRDR=9.8552,              
+          SAVSI=37.0, CHSTAT=0.25, DHDADI=8.5, TYPE=1.0$                         
+ NACA-H-6-63A008                                                                 
+  $VTPLNF CHRDTP=3.9878, SSPNE=9.8044, SSPN=9.8044, CHRDR=11.7348,               
+          SAVSI=44.0, CHSTAT=0.25, TYPE=1.0$                                     
+ NACA-V-6-64A010                                                                 
+  $JETPWR NENGSJ=2.0,  AIETLJ=2.0,    THSTCJ=0.0,                                
+          JIALOC=24.25, JELLOC=11.73,   JEVLOC=0.0,                              
+          JEALOC=31.39, JINLTA=16.72,                                            
+          AMBTMP=23.34, AMBSTP=69680.1, JERAD=1.34$                              
+ CASEID TOTAL: ELEVATOR: BOEING 747                                              
+1          THE FOLLOWING IS A LIST OF ALL INPUT CARDS FOR THIS CASE.
+0
+ DIM M                                                                           
+ DERIV RAD                                                                       
+ DAMP                                                                            
+ PART                                                                            
+  $FLTCON LOOP=2.0,                                                              
+          NMACH=1.0, MACH(1)=0.1,                                                
+          NALT=1.0, ALT(1)=5000.0,                                               
+          NALPHA=20.0,                                                           
+    ALSCHD(1)= -16.0, -8.0, -6.0, -4.0, -2.0, 0.0, 2.0, 5.0, 9.0, 12.0,          
+          15.0, 18.0, 20.0, 22.0, 24.0, 26.0, 27.0, 28.0, 29.0, 30.0,            
+          STMACH=0.6, TSMACH=1.4, TR=1.0$                                        
+  $OPTINS SREF=510.90, CBARR=8.32, BLREF=59.74$                                  
+  $SYNTHS XCG=31.5211, ZCG=4.5, XW=18.27, ZW=2.7586, ALIW=2.8, XH=56.9532,       
+          ZH=6.8961, ALIH=0.0, XV=54.6816, ZV=8.9916, SCALE=1.0,VERTUP=.TRUE.$   
+  $BODY NX=20.0, BNOSE=2.0, BTAIL=2.0, BLN=23.091, BLA=19.304, ITYPE=3.0,        
+     X(1)= 0.000,2.309,4.618,6.927,9.236,11.545,13.855,16.164,18.473,20.782,     
+        23.091,23.120,42.424,46.169,49.914,53.659,57.403,61.148,67.816,68.637,   
+        R(1)= 0.000,1.588,2.197,2.619,2.911,3.118,3.232,3.253,3.253,3.253,3.253, 
+        3.253,3.253,3.253,3.221,2.934,2.381,1.721,0.464,0.000,                   
+        ZU(1)=5.629,7.468,8.769,9.881,10.030,10.043,9.957,9.798,9.585,9.322,8.995
+        8.995,8.995,8.995,9.006,9.103,9.052,9.014,9.185,8.144,                   
+        ZL(1)=5.629,3.924,3.200,2.737,2.457,2.286,2.197,2.184,2.184,2.184,2.184, 
+        2.184,2.184,2.362,2.902,3.680,4.489,5.280,6.683,8.144$                   
+  $HTPLNF CHRDTP=2.4638, SSPNE=10.4288, SSPN=11.0865, CHRDR=9.8552,              
+          SAVSI=37.0, CHSTAT=0.25, DHDADI=8.5, TYPE=1.0$                         
+ NACA-H-6-63A008                                                                 
+  $SYMFLP FTYPE=1.0, NDELTA=3.0,                                                 
+          DELTA=-20.0,0.0,20.0,                                                  
+          PHETE=0.0005077, PHETEP=0.0003827, CHRDFI=2.8144, CHRDFO=0.7239,       
+          SPANFI=1.1404, SPANFO=9.4171$                                          
+ CASEID ELEVATOR: BOEING 747                                                     
+ NEXT CASE                                                                       
+0 INPUT DIMENSIONS ARE IN M , SCALE FACTOR IS 1.0000
+
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                   HORIZONTAL TAIL SECTION DEFINITION
+                                                               NACA 63A008
+     UPPER ABSCISSA     UPPER ORDINATE     LOWER ABSCISSA     LOWER ORDINATE      X-FRACTION CHORD    MEAN LINE    THICKNESS
+          .00000             .00000            .00000            .00000               .00000            .00000        .00000
+          .00100             .00296            .00100           -.00296               .00100            .00000        .00593
+          .00200             .00418            .00200           -.00418               .00200            .00000        .00837
+          .00300             .00512            .00300           -.00512               .00300            .00000        .01023
+          .00400             .00590            .00400           -.00590               .00400            .00000        .01180
+          .00500             .00659            .00500           -.00659               .00500            .00000        .01318
+          .00600             .00721            .00600           -.00721               .00600            .00000        .01443
+          .00700             .00778            .00700           -.00778               .00700            .00000        .01557
+          .00800             .00831            .00800           -.00831               .00800            .00000        .01663
+          .00900             .00881            .00900           -.00881               .00900            .00000        .01762
+          .01000             .00928            .01000           -.00928               .01000            .00000        .01856
+          .02000             .01303            .02000           -.01303               .02000            .00000        .02607
+          .03000             .01586            .03000           -.01586               .03000            .00000        .03173
+          .04000             .01820            .04000           -.01820               .04000            .00000        .03641
+          .05000             .02023            .05000           -.02023               .05000            .00000        .04045
+          .06000             .02202            .06000           -.02202               .06000            .00000        .04404
+          .07000             .02363            .07000           -.02363               .07000            .00000        .04726
+          .08000             .02510            .08000           -.02510               .08000            .00000        .05019
+          .09000             .02644            .09000           -.02644               .09000            .00000        .05288
+          .10000             .02767            .10000           -.02767               .10000            .00000        .05535
+          .11000             .02882            .11000           -.02882               .11000            .00000        .05763
+          .12000             .02988            .12000           -.02988               .12000            .00000        .05975
+          .13000             .03086            .13000           -.03086               .13000            .00000        .06172
+          .14000             .03177            .14000           -.03177               .14000            .00000        .06355
+          .15000             .03262            .15000           -.03262               .15000            .00000        .06525
+          .16000             .03341            .16000           -.03341               .16000            .00000        .06683
+          .17000             .03415            .17000           -.03415               .17000            .00000        .06830
+          .18000             .03483            .18000           -.03483               .18000            .00000        .06966
+          .19000             .03546            .19000           -.03546               .19000            .00000        .07092
+          .20000             .03604            .20000           -.03604               .20000            .00000        .07209
+          .21000             .03658            .21000           -.03658               .21000            .00000        .07316
+          .22000             .03708            .22000           -.03708               .22000            .00000        .07415
+          .23000             .03753            .23000           -.03753               .23000            .00000        .07505
+          .24000             .03794            .24000           -.03794               .24000            .00000        .07587
+          .25000             .03830            .25000           -.03830               .25000            .00000        .07661
+          .26000             .03864            .26000           -.03864               .26000            .00000        .07727
+          .27000             .03893            .27000           -.03893               .27000            .00000        .07786
+          .28000             .03918            .28000           -.03918               .28000            .00000        .07837
+          .29000             .03940            .29000           -.03940               .29000            .00000        .07881
+          .30000             .03959            .30000           -.03959               .30000            .00000        .07918
+          .35000             .04000            .35000           -.04000               .35000            .00000        .08000
+          .40000             .03961            .40000           -.03961               .40000            .00000        .07922
+          .45000             .03849            .45000           -.03849               .45000            .00000        .07698
+          .50000             .03672            .50000           -.03672               .50000            .00000        .07345
+          .55000             .03438            .55000           -.03438               .55000            .00000        .06876
+          .60000             .03153            .60000           -.03153               .60000            .00000        .06307
+          .65000             .02827            .65000           -.02827               .65000            .00000        .05654
+          .70000             .02466            .70000           -.02466               .70000            .00000        .04931
+          .75000             .02077            .75000           -.02077               .75000            .00000        .04155
+          .80000             .01670            .80000           -.01670               .80000            .00000        .03340
+          .82000             .01503            .82000           -.01503               .82000            .00000        .03006
+          .84000             .01336            .84000           -.01336               .84000            .00000        .02670
+          .86000             .01169            .86000           -.01169               .86000            .00000        .02332
+          .88000             .01002            .88000           -.01002               .88000            .00000        .01994
+          .90000             .00835            .90000           -.00835               .90000            .00000        .01655
+          .92000             .00668            .92000           -.00668               .92000            .00000        .01318
+          .94000             .00501            .94000           -.00501               .94000            .00000        .00983
+          .96000             .00334            .96000           -.00334               .96000            .00000        .00651
+          .98000             .00167            .98000           -.00167               .98000            .00000        .00323
+         1.00000             .00000           1.00000            .00000              1.00000            .00000        .00000
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                   HORIZONTAL TAIL SECTION DEFINITION
+0                                 IDEAL ANGLE OF ATTACK =    .00000 DEG.
+
+                              ZERO LIFT ANGLE OF ATTACK =    .00000 DEG.
+
+                                 IDEAL LIFT COEFFICIENT =    .00000
+
+                  ZERO LIFT PITCHING MOMENT COEFFICIENT =    .00000
+
+                             MACH ZERO LIFT-CURVE-SLOPE =    .09946 /DEG.
+
+                                    LEADING EDGE RADIUS =    .00442 FRACTION CHORD
+
+                              MAXIMUM AIRFOIL THICKNESS =    .08000 FRACTION CHORD
+
+                                                DELTA-Y =   1.84459 PERCENT CHORD
+
+
+0                         MACH=  .1000 LIFT-CURVE-SLOPE =    .09992 /DEG.      XAC =    .25855
+ WARNING*** BODY ALONE DYNAMIC DERIVATIVE METHOD VALID FOR NOSE CYLINDER ONLY
+            TAIL EFFECTS IGNORED]
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                                 BODY-HORIZONTAL TAIL CONFIGURATION
+                                                       ELEVATOR: BOEING 747
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   5.4048E+04     255.675     1.4431E+06           510.900      8.320    59.740    31.521     4.500
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+  -16.0     .044    -.290     .1103   -.291    -.038    -.379    9.527E-01    5.470E-02   -1.246E+00          INF    3.905E-03
+   -8.0     .017    -.150     .1060   -.151    -.004    -.703    1.060E+00   -1.164E-01                             -5.195E-03
+   -6.0     .013    -.112     .1011   -.113     .001    -.896    1.069E+00   -1.446E-01                             -7.622E-03
+   -4.0     .010    -.075     .0959   -.076     .004   -1.269    1.052E+00   -1.513E-01                             -1.003E-02
+   -2.0     .008    -.039     .0906   -.039     .006   -2.321    1.022E+00   -1.467E-01                             -1.238E-02
+     .0     .007    -.004     .0856   -.004     .007   ******    1.005E+00   -1.479E-01                             -1.465E-02
+    2.0     .007     .031     .0803    .032     .006    2.537    1.050E+00   -1.791E-01                             -1.692E-02
+    5.0     .010     .090     .0689    .090     .002     .762    1.242E+00   -2.657E-01                             -2.070E-02
+    9.0     .021     .188     .0458    .189    -.009     .242    1.552E+00   -3.945E-01                             -2.708E-02
+   12.0     .036     .275     .0227    .277    -.022     .082    1.743E+00   -4.945E-01                             -3.270E-02
+   15.0     .061     .371    -.0060    .374    -.037    -.016    1.747E+00   -4.886E-01                             -3.890E-02
+   18.0     .091     .458    -.0285    .464    -.055    -.061    1.606E+00   -3.871E-01                             -4.455E-02
+   20.0     .115     .513    -.0410    .521    -.068    -.079    1.507E+00   -3.087E-01                             -4.809E-02
+   22.0     .142     .563    -.0501    .575    -.080    -.087    1.367E+00   -1.735E-01                             -5.136E-02
+   24.0     .172     .608    -.0531    .625    -.091    -.085    1.184E+00   -8.060E-04                             -5.427E-02
+   26.0     .204     .646    -.0501    .670    -.100    -.075    1.209E+00   -3.248E-02                             -5.671E-02
+   27.0     .223     .668    -.0517    .697    -.104    -.074    1.260E+00   -8.411E-02                             -5.815E-02
+   28.0     .243     .690    -.0531    .723    -.109    -.073    8.831E-01    2.620E-01                             -5.956E-02
+   29.0     .262     .699    -.0426    .738    -.110    -.058    1.143E-01    9.971E-01                             -6.015E-02
+   30.0     .279     .694    -.0183    .741    -.105    -.025   -6.943E-01    1.791E+00                             -5.982E-02
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                                 BODY-HORIZONTAL TAIL CONFIGURATION
+                                                       ELEVATOR: BOEING 747
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   5.4048E+04     255.675     1.4431E+06           510.900      8.320    59.740    31.521     4.500
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+   -16.00      NDM          NDM           NDM          NDM       -1.033E-02      NDM          NDM          NDM          NDM 
+    -8.00                                                        -1.020E-02                                             NDM 
+    -6.00                                                        -1.006E-02                                             NDM 
+    -4.00                                                        -9.752E-03                                             NDM 
+    -2.00                                                        -9.382E-03                                             NDM 
+      .00                                                        -9.183E-03                                             NDM 
+     2.00                                                        -9.375E-03                                             NDM 
+     5.00                                                        -9.886E-03                                             NDM 
+     9.00                                                        -1.039E-02                                             NDM 
+    12.00                                                        -1.054E-02                                             NDM 
+    15.00                                                        -9.013E-03                                             NDM 
+    18.00                                                        -6.203E-03                                             NDM 
+    20.00                                                        -4.369E-03                                             NDM 
+    22.00                                                        -2.231E-03                                             NDM 
+    24.00                                                         1.900E-04                                             NDM 
+    26.00                                                         3.918E-04                                             NDM 
+    27.00                                                         1.549E-05                                             NDM 
+    28.00                                                         3.971E-03                                             NDM 
+    29.00                                                         1.199E-02                                             NDM 
+    30.00                                                         2.048E-02                                             NDM 
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                             CONFIGURATION AUXILIARY AND PARTIAL OUTPUT
+                                                 BODY-HORIZONTAL TAIL CONFIGURATION
+                                                       ELEVATOR: BOEING 747
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   5.4048E+04     255.675     1.4431E+06           510.900      8.320    59.740    31.521     4.500
+
+
+                                                       BASIC BODY PROPERTIES
+
+            WETTED AREA      XCG     ZCG     BASE AREA     ZERO LIFT DRAG   BASE DRAG   FRICTION DRAG   PRESSURE DRAG
+              .1161E+04    31.52    4.50       9.9733         .6261E-02     .1101E-02     .5160E-02         NA  
+
+
+                                         XCG RELATIVE TO THEORETICAL LEADING EDGE MAC= -29.51
+
+
+                                                       BASIC PLANFORM PROPERTIES
+
+                                    TAPER     ASPECT   QUARTER CHORD             QUARTER CHORD              ZERO LIFT    FRICTION
+                         AREA       RATIO      RATIO       SWEEP        MAC        X(MAC)       Y(MAC)        DRAG     COEFFICIENT
+0  HORIZONTAL TAIL
+   TOTAL THEORITICAL
++                      .1366E+03     .250     .3600E+01    37.000     .690E+01     .628E+02     .443E+01                       
+       TOTAL EXPOSED
++                      .1239E+03     .262     .3511E+01    37.000     .662E+01     .631E+02     .485E+01     .167E-02     .301E-02
+0*** NA PRINTED WHEN METHOD NOT APPLICABLE
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                             CONFIGURATION AUXILIARY AND PARTIAL OUTPUT
+                                                 BODY-HORIZONTAL TAIL CONFIGURATION
+                                                       ELEVATOR: BOEING 747
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   5.4048E+04     255.675     1.4431E+06           510.900      8.320    59.740    31.521     4.500
+0          CLA-B(H)= 1.000E-30     CLA-H(B)= 1.000E-30     K-B(H)= 1.000E-30     K-H(B)= 1.000E-30     XAC/C-B(H)= 3.900E-01
+
+
+
+                ALPHA         IV-B(W)          IV-W(H)          IV-B(H)          GAMMA/                  GAMMA/
+                                                                              2*PI*ALPHA*V*R         (2*PI*ALPHA*V*R)T
+
+
+                                                  DYNAMIC DERIVATIVE INCREMENTALS
+          CLP(GAMMA=CL=0) = 1.0000E-30     CLP(GAMMA)/CLP (GAMMA=0) = 1.0000E-30      CNP/THETA = 1.0000E-30
+                              CYP/GAMMA = 1.0000E-30                    CYP/CL (CL=0) = 1.0000E-30
+
+                                             CLB/GAMMA        (CMO/THETA)W     (CMO/THETA)H
+                                                NA               NA                NA  
+0*** NA PRINTED WHEN METHOD NOT APPLICABLE
+1
+1                            AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS OF HIGH LIFT AND CONTROL DEVICES
+                                            WING PLAIN TRAILING-EDGE FLAP CONFIGURATION
+                                                       ELEVATOR: BOEING 747
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   2.3576E+01     828.388     1.3407E+05           510.900      8.320    59.740    31.521     4.500
+0            ---------INCREMENTS DUE TO DEFLECTION---------              ---DERIVATIVES (PER DEGREE)---
+0     DELTA     D(CL)     D(CM)    D(CL MAX)    D(CD MIN)                (CLA)D     (CH)A       (CH)D
+
+
+      -20.0     -.136      .4780      .080       .00742                  NDM             NAN         NAN
+         .0      .000     -.0003      .000       .00000                  NDM                         NAN
+       20.0      .136     -.4781      .080       .00742                  NDM                         NAN
+0  *** NOTE * HINGE MOMENT DERIVATIVES ARE BASED ON TWICE THE AREA-MOMENT OF THE CONTROL ABOUT ITS HINGE LINE
+
+0            --------- INDUCED DRAG COEFFICIENT INCREMENT , D(CDI) , DUE TO DEFLECTION ---------
+0       DELTA = -20.0        .0      20.0
+   ALPHA
+0
+   -16.0        2.55E-02 -1.20E-05 -1.40E-02
+    -8.0        1.57E-02 -5.99E-06 -4.12E-03
+    -6.0        1.32E-02 -4.50E-06 -1.65E-03
+    -4.0        1.07E-02 -3.00E-06  8.24E-04
+    -2.0        8.24E-03 -1.50E-06  3.30E-03
+      .0        5.77E-03  2.12E-09  5.77E-03
+     2.0        3.30E-03  1.50E-06  8.24E-03
+     5.0       -4.12E-04  3.75E-06  1.19E-02
+     9.0       -5.36E-03  6.75E-06  1.69E-02
+    12.0       -9.06E-03  8.99E-06  2.06E-02
+    15.0       -1.28E-02  1.12E-05  2.43E-02
+    18.0       -1.65E-02  1.35E-05  2.80E-02
+    20.0       -1.90E-02  1.50E-05  3.05E-02
+    22.0       -2.14E-02  1.65E-05  3.30E-02
+    24.0       -2.39E-02  1.80E-05  3.54E-02
+    26.0       -2.64E-02  1.95E-05  3.79E-02
+    27.0       -2.76E-02  2.02E-05  3.91E-02
+    28.0       -2.88E-02  2.10E-05  4.04E-02
+    29.0       -3.01E-02  2.18E-05  4.16E-02
+    30.0       -3.13E-02  2.25E-05  4.28E-02
+0***NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1          THE FOLLOWING IS A LIST OF ALL INPUT CARDS FOR THIS CASE.
+0
+ DIM M                                                                           
+ DERIV RAD                                                                       
+ DAMP                                                                            
+ PART                                                                            
+  $FLTCON LOOP=2.0,                                                              
+          NMACH=1.0, MACH(1)=0.1,                                                
+          NALT=1.0, ALT(1)=5000.0,                                               
+          NALPHA=20.0,                                                           
+    ALSCHD(1)= -16.0, -8.0, -6.0, -4.0, -2.0, 0.0, 2.0, 5.0, 9.0, 12.0,          
+          15.0, 18.0, 20.0, 22.0, 24.0, 26.0, 27.0, 28.0, 29.0, 30.0,            
+          STMACH=0.6, TSMACH=1.4, TR=1.0$                                        
+  $OPTINS SREF=510.90, CBARR=8.32, BLREF=59.74$                                  
+  $SYNTHS XCG=31.5211, ZCG=4.5, XW=18.27, ZW=2.7586, ALIW=2.8, XH=56.9532,       
+          ZH=6.8961, ALIH=0.0, XV=54.6816, ZV=8.9916, SCALE=1.0,VERTUP=.TRUE.$   
+  $BODY NX=20.0, BNOSE=2.0, BTAIL=2.0, BLN=23.091, BLA=19.304, ITYPE=3.0,        
+     X(1)= 0.000,2.309,4.618,6.927,9.236,11.545,13.855,16.164,18.473,20.782,     
+        23.091,23.120,42.424,46.169,49.914,53.659,57.403,61.148,67.816,68.637,   
+        R(1)= 0.000,1.588,2.197,2.619,2.911,3.118,3.232,3.253,3.253,3.253,3.253, 
+        3.253,3.253,3.253,3.221,2.934,2.381,1.721,0.464,0.000,                   
+        ZU(1)=5.629,7.468,8.769,9.881,10.030,10.043,9.957,9.798,9.585,9.322,8.995
+        8.995,8.995,8.995,9.006,9.103,9.052,9.014,9.185,8.144,                   
+        ZL(1)=5.629,3.924,3.200,2.737,2.457,2.286,2.197,2.184,2.184,2.184,2.184, 
+        2.184,2.184,2.362,2.902,3.680,4.489,5.280,6.683,8.144$                   
+  $WGSCHR TCEFF=0.1, TYPEIN=2.0, NPTS=50.0,                                      
+          XCORD=0.0,0.0001,0.0002,0.0004,0.0008,0.0014,0.002,0.003,0.004,0.005,0.
+          0.008,0.010,0.012,0.014,0.020,0.026,0.032,0.04,0.05,0.06,0.07,0.08,    
+          0.10,0.12,0.14,0.16,0.19,0.22,0.26,0.30,0.35,0.40,0.45,0.50,0.55,0.60, 
+          0.65,0.70,0.74,0.78,0.82,0.86,0.90,0.93,0.95,0.97,0.98,0.99,1.0,       
+          MEAN= 0.0000000,0.0000300,0.0000500,0.0000250,0.0000260,0.0000400,0.000
+          0.0000200,-0.0000045,-0.0000845,-0.0001345,-0.0002100,-0.0002840,      
+          -0.0003200,-0.0004195,-0.0006595,-0.0008000,-0.0009300,-0.0010345,     
+          -0.0010945,-0.0010945,-0.0010300,-0.0009245,-0.0006100,-0.0002095,     
+          0.0001955,0.0006050,0.0011755,0.0017150,0.0024500,0.0032505,0.0041905, 
+          0.0052705,0.0064705,0.0078755,0.0095150,0.0114105,0.0134455,0.0153960, 
+          0.0165255,0.0172760,0.0170555,0.0156655,0.0129350,0.0099805,0.0075850, 
+          0.0048805,0.0034155,0.0018800,0.0002700,                               
+          THICK=0.0000000,0.0033000,0.0051000,0.0071300,0.0099500,0.0130600,0.015
+          0.0187400,0.0212290,0.0234290,0.0252890,0.0283800,0.0309500,0.0331200, 
+          0.0351790,0.0402390,0.0443200,0.0479600,0.0522290,0.0568910,0.0609890, 
+          0.0646400,0.0679290,0.0735600,0.0781790,0.0820310,0.0852300,0.0891690, 
+          0.0923300,0.0957000,0.0981210,0.1001410,0.1006990,0.0996990,0.0969310, 
+          0.0922100,0.0854390,0.0766890,0.0661500,0.0569710,0.0468300,0.0367490, 
+          0.0313310,0.0258700,0.0199610,0.0151700,0.0097610,0.0068310,0.0037600, 
+          0.0013600$                                                             
+  $WGPLNF CHRDTP=4.064,  SSPNE=26.5704,  SSPN=29.8216,  CHRDR=14.0663,           
+          SAVSI=40.76,                                                           
+          CHSTAT=0.0, TWISTA=-3.5, DHDADI=7.0, TYPE=1.0$                         
+  $SYMFLP FTYPE=2.0,    NDELTA=1.0,                                              
+          DELTA(1)=15.0,                                                         
+          PHETE=0.0522, PHETEP=0.0391,                                           
+          CHRDFI=3.66,   CHRDFO=2.93,                                            
+          SPANFI=4.0,  SPANFO=12.5,                                              
+          NTYPE=1.0$                                                             
+  $HTPLNF CHRDTP=2.4638, SSPNE=10.4288, SSPN=11.0865, CHRDR=9.8552,              
+          SAVSI=37.0, CHSTAT=0.25, DHDADI=8.5, TYPE=1.0$                         
+ NACA-H-6-63A008                                                                 
+  $VTPLNF CHRDTP=3.9878, SSPNE=9.8044, SSPN=9.8044, CHRDR=11.7348,               
+          SAVSI=44.0, CHSTAT=0.25, TYPE=1.0$                                     
+ NACA-V-6-64A010                                                                 
+  $JETPWR NENGSJ=2.0,  AIETLJ=2.0,    THSTCJ=0.0,                                
+          JIALOC=24.25, JELLOC=11.73,   JEVLOC=0.0,                              
+          JEALOC=31.39, JINLTA=16.72,                                            
+          AMBTMP=23.34, AMBSTP=69680.1, JERAD=1.34$                              
+ CASEID TOTAL: ELEVATOR: BOEING 747                                              
+0 INPUT DIMENSIONS ARE IN M , SCALE FACTOR IS 1.0000
+
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                        USER DEFINED WING SECTION
+     UPPER ABSCISSA     UPPER ORDINATE     LOWER ABSCISSA     LOWER ORDINATE      X-FRACTION CHORD    MEAN LINE    THICKNESS
+          .00000             .00000            .00000            .00000               .00000            .00000        .00000
+          .00003             .00168            .00017           -.00162               .00010            .00003        .00330
+          .00010             .00260            .00030           -.00250               .00020            .00005        .00510
+          .00027             .00359            .00053           -.00354               .00040            .00002        .00713
+          .00064             .00500            .00096           -.00495               .00080            .00003        .00995
+          .00124             .00657            .00156           -.00649               .00140            .00004        .01306
+          .00188             .00750            .00212           -.00750               .00200            .00000        .01500
+          .00297             .00939            .00303           -.00935               .00300            .00002        .01874
+          .00410             .01061            .00390           -.01062               .00400            .00000        .02123
+          .00526             .01163            .00474           -.01180               .00500           -.00008        .02343
+         -.00418             .01180            .00418           -.01207               .00000           -.00013        .02529
+          .00845             .01397            .00755           -.01439               .00800           -.00021        .02838
+          .01043             .01519            .00957           -.01575               .01000           -.00028        .03095
+          .01256             .01623            .01144           -.01687               .01200           -.00032        .03312
+          .01483             .01715            .01317           -.01799               .01400           -.00042        .03518
+          .02064             .01945            .01936           -.02077               .02000           -.00066        .04024
+          .02650             .02135            .02550           -.02295               .02600           -.00080        .04432
+          .03243             .02305            .03157           -.02491               .03200           -.00093        .04796
+          .04026             .02508            .03974           -.02715               .04000           -.00103        .05223
+          .05009             .02735            .04991           -.02954               .05000           -.00109        .05689
+          .05990             .02940            .06010           -.03159               .06000           -.00109        .06099
+          .06973             .03129            .07027           -.03335               .07000           -.00103        .06464
+          .07958             .03304            .08042           -.03489               .08000           -.00092        .06793
+          .09934             .03616            .10066           -.03738               .10000           -.00061        .07356
+          .11921             .03887            .12079           -.03929               .12000           -.00021        .07818
+          .13916             .04120            .14084           -.04081               .14000            .00020        .08203
+          .15915             .04321            .16085           -.04200               .16000            .00061        .08523
+          .18918             .04575            .19082           -.04340               .19000            .00118        .08917
+          .21916             .04787            .22084           -.04444               .22000            .00172        .09233
+          .25908             .05029            .26092           -.04539               .26000            .00245        .09570
+          .29904             .05230            .30096           -.04580               .30000            .00325        .09812
+          .34899             .05425            .35101           -.04587               .35000            .00419        .10014
+          .39885             .05561            .40115           -.04507               .40000            .00527        .10070
+          .44870             .05630            .45130           -.04336               .45000            .00647        .09970
+          .49853             .05632            .50147           -.04057               .50000            .00788        .09693
+          .54837             .05559            .55163           -.03656               .55000            .00951        .09221
+          .59832             .05410            .60168           -.03128               .60000            .01141        .08544
+          .64847             .05176            .65153           -.02487               .65000            .01345        .07669
+          .69891             .04845            .70109           -.01766               .70000            .01540        .06615
+          .73933             .04500            .74067           -.01195               .74000            .01653        .05697
+          .77984             .04069            .78016           -.00614               .78000            .01728        .04683
+          .82037             .03543            .81963           -.00132               .82000            .01706        .03675
+          .86081             .03131            .85919            .00002               .86000            .01567        .03133
+          .90110             .02582            .89890            .00005               .90000            .01293        .02587
+          .93110             .01990            .92890            .00006               .93000            .00998        .01996
+          .95096             .01511            .94904            .00006               .95000            .00758        .01517
+          .97069             .00971            .96931            .00005               .97000            .00488        .00976
+          .98051             .00679            .97949            .00004               .98000            .00342        .00683
+          .99032             .00373            .98968            .00003               .99000            .00188        .00376
+         1.00000             .00000           1.00000            .00000              1.00000            .00000        .00000
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                        WING SECTION DEFINITION
+0                                 IDEAL ANGLE OF ATTACK =  -1.42494 DEG.
+
+                              ZERO LIFT ANGLE OF ATTACK =  -2.88109 DEG.
+
+                                 IDEAL LIFT COEFFICIENT =    .19208
+
+                  ZERO LIFT PITCHING MOMENT COEFFICIENT =   -.09987
+
+                             MACH ZERO LIFT-CURVE-SLOPE =    .09712 /DEG.
+
+                                    LEADING EDGE RADIUS =    .01366 FRACTION CHORD
+
+                              MAXIMUM AIRFOIL THICKNESS =    .10070 FRACTION CHORD
+
+                                                DELTA-Y =   1.75602 PERCENT CHORD
+
+
+0                         MACH=  .1000 LIFT-CURVE-SLOPE =    .09752 /DEG.      XAC =    .25790
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                   HORIZONTAL TAIL SECTION DEFINITION
+                                                               NACA 63A008
+     UPPER ABSCISSA     UPPER ORDINATE     LOWER ABSCISSA     LOWER ORDINATE      X-FRACTION CHORD    MEAN LINE    THICKNESS
+          .00000             .00000            .00000            .00000               .00000            .00000        .00000
+          .00100             .00296            .00100           -.00296               .00100            .00000        .00593
+          .00200             .00418            .00200           -.00418               .00200            .00000        .00837
+          .00300             .00512            .00300           -.00512               .00300            .00000        .01023
+          .00400             .00590            .00400           -.00590               .00400            .00000        .01180
+          .00500             .00659            .00500           -.00659               .00500            .00000        .01318
+          .00600             .00721            .00600           -.00721               .00600            .00000        .01443
+          .00700             .00778            .00700           -.00778               .00700            .00000        .01557
+          .00800             .00831            .00800           -.00831               .00800            .00000        .01663
+          .00900             .00881            .00900           -.00881               .00900            .00000        .01762
+          .01000             .00928            .01000           -.00928               .01000            .00000        .01856
+          .02000             .01303            .02000           -.01303               .02000            .00000        .02607
+          .03000             .01586            .03000           -.01586               .03000            .00000        .03173
+          .04000             .01820            .04000           -.01820               .04000            .00000        .03641
+          .05000             .02023            .05000           -.02023               .05000            .00000        .04045
+          .06000             .02202            .06000           -.02202               .06000            .00000        .04404
+          .07000             .02363            .07000           -.02363               .07000            .00000        .04726
+          .08000             .02510            .08000           -.02510               .08000            .00000        .05019
+          .09000             .02644            .09000           -.02644               .09000            .00000        .05288
+          .10000             .02767            .10000           -.02767               .10000            .00000        .05535
+          .11000             .02882            .11000           -.02882               .11000            .00000        .05763
+          .12000             .02988            .12000           -.02988               .12000            .00000        .05975
+          .13000             .03086            .13000           -.03086               .13000            .00000        .06172
+          .14000             .03177            .14000           -.03177               .14000            .00000        .06355
+          .15000             .03262            .15000           -.03262               .15000            .00000        .06525
+          .16000             .03341            .16000           -.03341               .16000            .00000        .06683
+          .17000             .03415            .17000           -.03415               .17000            .00000        .06830
+          .18000             .03483            .18000           -.03483               .18000            .00000        .06966
+          .19000             .03546            .19000           -.03546               .19000            .00000        .07092
+          .20000             .03604            .20000           -.03604               .20000            .00000        .07209
+          .21000             .03658            .21000           -.03658               .21000            .00000        .07316
+          .22000             .03708            .22000           -.03708               .22000            .00000        .07415
+          .23000             .03753            .23000           -.03753               .23000            .00000        .07505
+          .24000             .03794            .24000           -.03794               .24000            .00000        .07587
+          .25000             .03830            .25000           -.03830               .25000            .00000        .07661
+          .26000             .03864            .26000           -.03864               .26000            .00000        .07727
+          .27000             .03893            .27000           -.03893               .27000            .00000        .07786
+          .28000             .03918            .28000           -.03918               .28000            .00000        .07837
+          .29000             .03940            .29000           -.03940               .29000            .00000        .07881
+          .30000             .03959            .30000           -.03959               .30000            .00000        .07918
+          .35000             .04000            .35000           -.04000               .35000            .00000        .08000
+          .40000             .03961            .40000           -.03961               .40000            .00000        .07922
+          .45000             .03849            .45000           -.03849               .45000            .00000        .07698
+          .50000             .03672            .50000           -.03672               .50000            .00000        .07345
+          .55000             .03438            .55000           -.03438               .55000            .00000        .06876
+          .60000             .03153            .60000           -.03153               .60000            .00000        .06307
+          .65000             .02827            .65000           -.02827               .65000            .00000        .05654
+          .70000             .02466            .70000           -.02466               .70000            .00000        .04931
+          .75000             .02077            .75000           -.02077               .75000            .00000        .04155
+          .80000             .01670            .80000           -.01670               .80000            .00000        .03340
+          .82000             .01503            .82000           -.01503               .82000            .00000        .03006
+          .84000             .01336            .84000           -.01336               .84000            .00000        .02670
+          .86000             .01169            .86000           -.01169               .86000            .00000        .02332
+          .88000             .01002            .88000           -.01002               .88000            .00000        .01994
+          .90000             .00835            .90000           -.00835               .90000            .00000        .01655
+          .92000             .00668            .92000           -.00668               .92000            .00000        .01318
+          .94000             .00501            .94000           -.00501               .94000            .00000        .00983
+          .96000             .00334            .96000           -.00334               .96000            .00000        .00651
+          .98000             .00167            .98000           -.00167               .98000            .00000        .00323
+         1.00000             .00000           1.00000            .00000              1.00000            .00000        .00000
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                   HORIZONTAL TAIL SECTION DEFINITION
+0                                 IDEAL ANGLE OF ATTACK =    .00000 DEG.
+
+                              ZERO LIFT ANGLE OF ATTACK =    .00000 DEG.
+
+                                 IDEAL LIFT COEFFICIENT =    .00000
+
+                  ZERO LIFT PITCHING MOMENT COEFFICIENT =    .00000
+
+                             MACH ZERO LIFT-CURVE-SLOPE =    .09946 /DEG.
+
+                                    LEADING EDGE RADIUS =    .00442 FRACTION CHORD
+
+                              MAXIMUM AIRFOIL THICKNESS =    .08000 FRACTION CHORD
+
+                                                DELTA-Y =   1.84459 PERCENT CHORD
+
+
+0                         MACH=  .1000 LIFT-CURVE-SLOPE =    .09992 /DEG.      XAC =    .25855
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                    VERTICAL TAIL SECTION DEFINITION
+                                                               NACA 64A010
+     UPPER ABSCISSA     UPPER ORDINATE     LOWER ABSCISSA     LOWER ORDINATE      X-FRACTION CHORD    MEAN LINE    THICKNESS
+          .00000             .00000            .00000            .00000               .00000            .00000        .00000
+          .00100             .00364            .00100           -.00364               .00100            .00000        .00729
+          .00200             .00511            .00200           -.00511               .00200            .00000        .01023
+          .00300             .00622            .00300           -.00622               .00300            .00000        .01245
+          .00400             .00715            .00400           -.00715               .00400            .00000        .01430
+          .00500             .00796            .00500           -.00796               .00500            .00000        .01591
+          .00600             .00868            .00600           -.00868               .00600            .00000        .01736
+          .00700             .00934            .00700           -.00934               .00700            .00000        .01868
+          .00800             .00995            .00800           -.00995               .00800            .00000        .01990
+          .00900             .01052            .00900           -.01052               .00900            .00000        .02104
+          .01000             .01105            .01000           -.01105               .01000            .00000        .02211
+          .02000             .01525            .02000           -.01525               .02000            .00000        .03050
+          .03000             .01834            .03000           -.01834               .03000            .00000        .03668
+          .04000             .02086            .04000           -.02086               .04000            .00000        .04172
+          .05000             .02303            .05000           -.02303               .05000            .00000        .04606
+          .06000             .02495            .06000           -.02495               .06000            .00000        .04990
+          .07000             .02668            .07000           -.02668               .07000            .00000        .05337
+          .08000             .02827            .08000           -.02827               .08000            .00000        .05655
+          .09000             .02975            .09000           -.02975               .09000            .00000        .05949
+          .10000             .03112            .10000           -.03112               .10000            .00000        .06224
+          .11000             .03241            .11000           -.03241               .11000            .00000        .06483
+          .12000             .03364            .12000           -.03364               .12000            .00000        .06727
+          .13000             .03479            .13000           -.03479               .13000            .00000        .06958
+          .14000             .03589            .14000           -.03589               .14000            .00000        .07178
+          .15000             .03694            .15000           -.03694               .15000            .00000        .07388
+          .16000             .03794            .16000           -.03794               .16000            .00000        .07587
+          .17000             .03889            .17000           -.03889               .17000            .00000        .07778
+          .18000             .03980            .18000           -.03980               .18000            .00000        .07960
+          .19000             .04067            .19000           -.04067               .19000            .00000        .08134
+          .20000             .04150            .20000           -.04150               .20000            .00000        .08300
+          .21000             .04229            .21000           -.04229               .21000            .00000        .08459
+          .22000             .04305            .22000           -.04305               .22000            .00000        .08609
+          .23000             .04376            .23000           -.04376               .23000            .00000        .08753
+          .24000             .04444            .24000           -.04444               .24000            .00000        .08889
+          .25000             .04509            .25000           -.04509               .25000            .00000        .09017
+          .26000             .04569            .26000           -.04569               .26000            .00000        .09139
+          .27000             .04626            .27000           -.04626               .27000            .00000        .09253
+          .28000             .04679            .28000           -.04679               .28000            .00000        .09359
+          .29000             .04729            .29000           -.04729               .29000            .00000        .09458
+          .30000             .04774            .30000           -.04774               .30000            .00000        .09549
+          .35000             .04941            .35000           -.04941               .35000            .00000        .09883
+          .40000             .05000            .40000           -.05000               .40000            .00000        .10000
+          .45000             .04941            .45000           -.04941               .45000            .00000        .09883
+          .50000             .04774            .50000           -.04774               .50000            .00000        .09548
+          .55000             .04511            .55000           -.04511               .55000            .00000        .09023
+          .60000             .04166            .60000           -.04166               .60000            .00000        .08332
+          .65000             .03751            .65000           -.03751               .65000            .00000        .07502
+          .70000             .03280            .70000           -.03280               .70000            .00000        .06560
+          .75000             .02766            .75000           -.02766               .75000            .00000        .05531
+          .80000             .02221            .80000           -.02221               .80000            .00000        .04441
+          .82000             .01999            .82000           -.01999               .82000            .00000        .03995
+          .84000             .01777            .84000           -.01777               .84000            .00000        .03544
+          .86000             .01555            .86000           -.01555               .86000            .00000        .03091
+          .88000             .01332            .88000           -.01332               .88000            .00000        .02637
+          .90000             .01110            .90000           -.01110               .90000            .00000        .02185
+          .92000             .00888            .92000           -.00888               .92000            .00000        .01736
+          .94000             .00666            .94000           -.00666               .94000            .00000        .01291
+          .96000             .00444            .96000           -.00444               .96000            .00000        .00852
+          .98000             .00222            .98000           -.00222               .98000            .00000        .00421
+         1.00000             .00000           1.00000            .00000              1.00000            .00000        .00000
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM   
+                                                    VERTICAL TAIL SECTION DEFINITION
+0                                 IDEAL ANGLE OF ATTACK =    .00000 DEG.
+
+                              ZERO LIFT ANGLE OF ATTACK =    .00000 DEG.
+
+                                 IDEAL LIFT COEFFICIENT =    .00000
+
+                  ZERO LIFT PITCHING MOMENT COEFFICIENT =    .00000
+
+                             MACH ZERO LIFT-CURVE-SLOPE =    .09731 /DEG.
+
+                                    LEADING EDGE RADIUS =    .00690 FRACTION CHORD
+
+                              MAXIMUM AIRFOIL THICKNESS =    .10000 FRACTION CHORD
+
+                                                DELTA-Y =   2.05705 PERCENT CHORD
+
+
+0                         MACH=  .1000 LIFT-CURVE-SLOPE =    .09775 /DEG.      XAC =    .26262
+ WARNING*** BODY ALONE DYNAMIC DERIVATIVE METHOD VALID FOR NOSE CYLINDER ONLY
+            TAIL EFFECTS IGNORED]
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS AT ANGLE OF ATTACK AND IN SIDESLIP
+                                        WING-BODY-VERTICAL TAIL-HORIZONTAL TAIL CONFIGURATION
+                                  JET POWER EFFECTS INCLUDED IN THE LONGITUDINAL STABILITY RESULTS
+                                                    TOTAL: ELEVATOR: BOEING 747
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   5.4048E+04     255.675     1.4431E+06           510.900      8.320    59.740    31.521     4.500
+0                                                               -------------------DERIVATIVE (PER RADIAN)-------------------
+0 ALPHA     CD       CL       CM       CN       CA       XCP        CLA          CMA          CYB          CNB          CLB
+0
+  -16.0     .083   -1.046     .7156  -1.028    -.208    -.696    4.253E+00   -3.163E+00   -5.124E-01   -6.949E-03   -2.017E-02
+   -8.0     .027    -.416     .4191   -.415    -.031   -1.009    4.537E+00   -2.271E+00                             -1.044E-01
+   -6.0     .020    -.249     .3453   -.250    -.006   -1.381    4.622E+00   -2.258E+00                             -1.267E-01
+   -4.0     .016    -.081     .2723   -.081     .011   -3.342    4.648E+00   -2.175E+00                             -1.492E-01
+   -2.0     .015     .088     .2044    .087     .019    2.348    4.621E+00   -2.050E+00                             -1.717E-01
+     .0     .018     .255     .1402    .255     .018     .551    4.566E+00   -1.930E+00                             -1.940E-01
+    2.0     .023     .419     .0806    .419     .008     .192    4.528E+00   -1.924E+00                             -2.159E-01
+    5.0     .035     .665    -.0169    .666    -.023    -.025    4.559E+00   -2.091E+00                             -2.485E-01
+    9.0     .064     .999    -.1591    .996    -.093    -.160    4.565E+00   -2.214E+00                             -2.923E-01
+   12.0     .096    1.245    -.2682   1.238    -.165    -.217    4.449E+00   -2.223E+00                             -3.246E-01
+   15.0     .136    1.482    -.3765   1.467    -.253    -.257    4.293E+00   -2.529E+00                             -3.553E-01
+   18.0     .187    1.712    -.5181   1.686    -.351    -.307    4.038E+00   -2.727E+00                             -3.822E-01
+   20.0     .226    1.854    -.6058   1.820    -.422    -.333    3.846E+00   -2.747E+00                             -3.981E-01
+   22.0     .270    1.991    -.7004   1.947    -.496    -.360    3.257E+00   -2.942E+00                             -4.126E-01
+   24.0     .311    2.092     .0681   2.037    -.567     .033    1.802E+00      NA                                  -4.216E-01
+   26.0     .344    2.127     .0724   2.063    -.623     .035   -2.255E+00      NA                                  -4.197E-01
+   27.0     .346    2.063     .0745   1.995    -.628     .037   -5.089E+00      NA                                  -4.059E-01
+   28.0     .347    1.954     .0765   1.889    -.611     .041   -6.562E+00      NA                                  -3.854E-01
+   29.0     .352    1.839     .0785   1.779    -.583     .044   -5.917E+00      NA                                  -3.633E-01
+   30.0     .361    1.752     .0805   1.698    -.563     .047   -4.221E+00      NA                                  -3.469E-01
+0                                    ALPHA     Q/QINF    EPSLON  D(EPSLON)/D(ALPHA)
+0
+                                    -16.0      1.000     -3.795         .304
+                                     -8.0      1.000     -1.360         .353
+                                     -6.0      1.000      -.630         .373
+                                     -4.0      1.000       .133         .388
+                                     -2.0      1.000       .923         .402
+                                       .0      1.000      1.739         .413
+                                      2.0      1.000      2.575         .397
+                                      5.0      1.000      3.673         .345
+                                      9.0      1.000      4.946         .290
+                                     12.0       .996      5.753         .241
+                                     15.0       .973      6.392         .188
+                                     18.0      1.000      6.882         .134
+                                     20.0      1.000      7.112         .090
+                                     22.0      1.000      7.242         .012
+                                     24.0      1.000      7.159        -.167
+                                     26.0      1.000      6.574        -.376
+                                     27.0      1.000      6.156        -.648
+                                     28.0      1.000      5.278        -.587
+                                     29.0      1.000      4.981        -.578
+                                     30.0      1.000      4.122        -.858
+0*** NA PRINTED WHEN METHOD NOT APPLICABLE
+1                               AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                                         DYNAMIC DERIVATIVES
+                                        WING-BODY-VERTICAL TAIL-HORIZONTAL TAIL CONFIGURATION
+                                                    TOTAL: ELEVATOR: BOEING 747
+ 
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   5.4048E+04     255.675     1.4431E+06           510.900      8.320    59.740    31.521     4.500
+                                                    DYNAMIC DERIVATIVES (PER RADIAN)
+0           -------PITCHING-------    -----ACCELERATION------    --------------ROLLING--------------    --------YAWING--------
+0   ALPHA       CLQ          CMQ           CLAD         CMAD         CLP          CYP          CNP          CNR          CLR
+0
+   -16.00    1.059E+01   -2.945E+01     2.132E+00   -8.100E+00   -3.598E-01   -3.895E-01    9.919E-02   -9.405E-02   -1.638E-01
+    -8.00                               2.472E+00   -9.391E+00   -3.785E-01   -2.298E-01    3.733E-02   -1.025E-01   -2.624E-02
+    -6.00                               2.614E+00   -9.930E+00   -3.816E-01   -1.876E-01    2.074E-02   -1.050E-01    9.838E-03
+    -4.00                               2.719E+00   -1.033E+01   -3.811E-01   -1.454E-01    4.104E-03   -1.076E-01    4.599E-02
+    -2.00                               2.812E+00   -1.069E+01   -3.788E-01   -1.031E-01   -1.269E-02   -1.104E-01    8.199E-02
+      .00                               2.893E+00   -1.099E+01   -3.744E-01   -6.072E-02   -2.962E-02   -1.133E-01    1.176E-01
+     2.00                               2.782E+00   -1.057E+01   -3.676E-01   -1.857E-02   -4.670E-02   -1.163E-01    1.525E-01
+     5.00                               2.420E+00   -9.193E+00   -3.527E-01    4.396E-02   -7.251E-02   -1.209E-01    2.029E-01
+     9.00                               2.033E+00   -7.723E+00   -3.253E-01    1.247E-01   -1.068E-01   -1.269E-01    2.648E-01
+    12.00                               1.681E+00   -6.387E+00   -2.992E-01    1.821E-01   -1.320E-01   -1.311E-01    3.061E-01
+    15.00                               1.283E+00   -4.875E+00   -2.679E-01    2.362E-01   -1.565E-01   -1.348E-01    3.420E-01
+    18.00                               9.410E-01   -3.575E+00   -2.324E-01    2.860E-01   -1.797E-01   -1.377E-01    3.720E-01
+    20.00                               6.303E-01   -2.395E+00   -2.069E-01    3.165E-01   -1.942E-01   -1.392E-01    3.885E-01
+    22.00                               8.221E-02   -3.123E-01   -1.484E-01    3.480E-01   -2.104E-01   -1.401E-01    4.019E-01
+    24.00                              -1.171E+00    4.448E+00   -1.025E-02    3.838E-01   -2.289E-01   -1.399E-01    4.055E-01
+    26.00                              -2.636E+00    1.001E+01    4.653E-01    1.660E-01   -2.796E-01   -1.374E-01    3.896E-01
+    27.00                              -4.536E+00    1.723E+01    6.794E-01    2.543E-01   -2.750E-01   -1.333E-01    3.514E-01
+    28.00                              -4.115E+00    1.563E+01    7.089E-01    2.500E-01   -2.529E-01   -1.293E-01    3.111E-01
+    29.00                              -4.049E+00    1.538E+01    5.603E-01    2.256E-01   -2.234E-01   -1.255E-01    2.703E-01
+    30.00                              -6.012E+00    2.284E+01    2.458E-01    2.048E-01   -1.859E-01   -1.231E-01    2.463E-01
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                             CONFIGURATION AUXILIARY AND PARTIAL OUTPUT
+                                        WING-BODY-VERTICAL TAIL-HORIZONTAL TAIL CONFIGURATION
+                                                    TOTAL: ELEVATOR: BOEING 747
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   5.4048E+04     255.675     1.4431E+06           510.900      8.320    59.740    31.521     4.500
+
+
+                                                       BASIC BODY PROPERTIES
+
+            WETTED AREA      XCG     ZCG     BASE AREA     ZERO LIFT DRAG   BASE DRAG   FRICTION DRAG   PRESSURE DRAG
+              .1161E+04    31.52    4.50       9.9733         .6261E-02     .1101E-02     .5160E-02         NA  
+
+
+                                         XCG RELATIVE TO THEORETICAL LEADING EDGE MAC=   2.76
+
+
+                                                       BASIC PLANFORM PROPERTIES
+
+                                    TAPER     ASPECT   QUARTER CHORD             QUARTER CHORD              ZERO LIFT    FRICTION
+                         AREA       RATIO      RATIO       SWEEP        MAC        X(MAC)       Y(MAC)        DRAG     COEFFICIENT
+0      WING
+   TOTAL THEORITICAL
++                      .5407E+03     .289     .6579E+01    37.887     .998E+01     .313E+02     .122E+02                       
+       TOTAL EXPOSED
++                      .4528E+03     .313     .6237E+01    37.887     .930E+01     .329E+02     .142E+02     .592E-02     .286E-02
+0  HORIZONTAL TAIL
+   TOTAL THEORITICAL
++                      .1366E+03     .250     .3600E+01    37.000     .690E+01     .628E+02     .443E+01                       
+       TOTAL EXPOSED
++                      .1239E+03     .262     .3511E+01    37.000     .662E+01     .631E+02     .485E+01     .167E-02     .301E-02
+0   VERTICAL TAIL
+   TOTAL THEORITICAL
++                      .7708E+02     .340     .1247E+01    44.000     .850E+01     .616E+02     .131E+02                       
+       TOTAL EXPOSED
++                      .7708E+02     .340     .1247E+01    44.000     .850E+01     .616E+02     .410E+01     .995E-03     .290E-02
+0*** NA PRINTED WHEN METHOD NOT APPLICABLE
+1                             AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                             CONFIGURATION AUXILIARY AND PARTIAL OUTPUT
+                                        WING-BODY-VERTICAL TAIL-HORIZONTAL TAIL CONFIGURATION
+                                                    TOTAL: ELEVATOR: BOEING 747
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   5.4048E+04     255.675     1.4431E+06           510.900      8.320    59.740    31.521     4.500
+0          CLA-B(W)= 8.119E-03     CLA-W(B)= 6.111E-02     K-B(W)= 1.444E-01     K-W(B)= 1.087E+00     XAC/C-B(W)= 7.846E-01
+0          CLA-B(H)= 1.103E-03     CLA-H(B)= 1.498E-02     K-B(H)= 7.712E-02     K-H(B)= 1.047E+00     XAC/C-B(H)= 3.900E-01
+0                                      SIDEWASH, (1 + D(SIGMA)/D(BETA))QV/Q = 8.9367461E-01
+
+
+
+                ALPHA         IV-B(W)          IV-W(H)          IV-B(H)          GAMMA/                  GAMMA/
+                                                                              2*PI*ALPHA*V*R         (2*PI*ALPHA*V*R)T
+               -16.000       -.4648E-01       -.7921E+00       -.3092E+00        .4619E+00                .1023E+01
+                -8.000        .0000E+00       -.8585E+00       -.7576E-01          NDM                    .4640E+00
+                -6.000        .0000E+00       -.8736E+00        .0000E+00          NDM                      NDM 
+                -4.000        .0000E+00       -.8880E+00        .0000E+00        .0000E+00                .0000E+00
+                -2.000        .0000E+00       -.9016E+00        .0000E+00        .0000E+00                .0000E+00
+                  .000        .0000E+00       -.9143E+00        .0000E+00        .0000E+00                .0000E+00
+                 2.000        .0000E+00       -.9262E+00        .0000E+00        .0000E+00                .0000E+00
+                 5.000        .0000E+00       -.9419E+00        .0000E+00        .0000E+00                .0000E+00
+                 9.000        .0000E+00       -.9586E+00       -.1489E+00          NDM                    .5349E+00
+                12.000        .0000E+00       -.9674E+00       -.2695E+00          NDM                    .7470E+00
+                15.000       -.2357E-01       -.9724E+00       -.3055E+00        .4318E+00                .9528E+00
+                18.000       -.8641E-01       -.9731E+00       -.3171E+00        .5199E+00                .1161E+01
+                20.000       -.1225E+00       -.9709E+00       -.3207E+00        .5821E+00                .1304E+01
+                22.000       -.1319E+00       -.9665E+00       -.3207E+00        .6003E+00                .1403E+01
+                24.000       -.1397E+00       -.9596E+00       -.3204E+00        .6185E+00                .1509E+01
+                26.000       -.1471E+00       -.9502E+00       -.3195E+00        .6367E+00                .1622E+01
+                27.000       -.1507E+00       -.9445E+00       -.3184E+00        .6458E+00                .1682E+01
+                28.000       -.1542E+00       -.9381E+00       -.3171E+00        .6549E+00                .1742E+01
+                29.000       -.1576E+00       -.9310E+00       -.3160E+00        .6640E+00                .1802E+01
+                30.000       -.1610E+00       -.9232E+00       -.3149E+00        .6731E+00                .1862E+01
+
+
+                                                  DYNAMIC DERIVATIVE INCREMENTALS
+          CLP(GAMMA=CL=0) =-3.4897E-01     CLP(GAMMA)/CLP (GAMMA=0) = 1.0144E+00      CNP/THETA = 2.0463E-04
+                              CYP/GAMMA =-1.2940E-01                    CYP/CL (CL=0) = 3.5151E-01
+
+                                             CLB/GAMMA        (CMO/THETA)W     (CMO/THETA)H
+                                              -.1830E-03        -.6539E-02           NA  
+0*** NDM PRINTED WHEN NO DATCOM METHODS EXIST
+0*** NA PRINTED WHEN METHOD NOT APPLICABLE
+1
+1                            AUTOMATED STABILITY AND CONTROL METHODS PER APRIL 1976 VERSION OF DATCOM
+                                         CHARACTERISTICS OF HIGH LIFT AND CONTROL DEVICES
+                                              TAIL SINGLE-SLOTTED FLAP CONFIGURATION
+                                                    TOTAL: ELEVATOR: BOEING 747
+ -----------------------  FLIGHT CONDITIONS  ------------------------           --------------  REFERENCE DIMENSIONS  ------------
+  MACH    ALTITUDE   VELOCITY    PRESSURE    TEMPERATURE     REYNOLDS             REF.      REFERENCE LENGTH   MOMENT REF. CENTER
+ NUMBER                                                       NUMBER              AREA       LONG.     LAT.     HORIZ      VERT
+              M        M/SEC      N/ M**2       DEG K         1/ M                M**2         M         M         M         M
+0  .100    5000.00      32.05   2.3576E+01     828.388     1.3407E+05           510.900      8.320    59.740    31.521     4.500
+0            ---------INCREMENTS DUE TO DEFLECTION---------              ---DERIVATIVES (PER DEGREE)---
+0     DELTA     D(CL)     D(CM)    D(CL MAX)    D(CD MIN)                (CLA)D     (CH)A       (CH)D
+
+
+       15.0      .066     -.2328      .045       .00237                1.379E-02     NDM         NDM 
+0  *** NOTE * HINGE MOMENT DERIVATIVES ARE BASED ON TWICE THE AREA-MOMENT OF THE CONTROL ABOUT ITS HINGE LINE
+
+0            --------- INDUCED DRAG COEFFICIENT INCREMENT , D(CDI) , DUE TO DEFLECTION ---------
+0       DELTA =  15.0
+   ALPHA
+0
+   -16.0       -4.99E-03
+    -8.0       -1.33E-03
+    -6.0       -4.99E-04
+    -4.0        3.13E-04
+    -2.0        1.11E-03
+      .0        1.88E-03
+     2.0        2.65E-03
+     5.0        3.90E-03
+     9.0        5.69E-03
+    12.0        7.13E-03
+    15.0        8.68E-03
+    18.0        1.03E-02
+    20.0        1.15E-02
+    22.0        1.27E-02
+    24.0        1.41E-02
+    26.0        1.58E-02
+    27.0        1.67E-02
+    28.0        1.79E-02
+    29.0        1.88E-02
+    30.0        2.00E-02
+0***NDM PRINTED WHEN NO DATCOM METHODS EXIST
+1 END OF JOB.

@@ -1,0 +1,85 @@
+--------------------------------------------------------------------
+VELIVOLO DESCRITTO NELLE TABELLE A PAGINA 36 QUADERNO 7
+--------------------------------------------------------------------
+
+A/C MAIN GEOMETRIC DATA
+17.00   Wing planform area, S, (m^2)
+6.900   Wing span, b, (m)
+2.600   Mean aerodynamic chord, mac, (m)
+
+MASS AND INERTIA
+6000     Mass, mass (kg)
+2.200    Inertia gyration radius around pitch axis, k_y, (m)
+0.0349   Wing-Body zero-lift line angle wrt x-body axis, mu_x, (rad)
+0.32     Normalized CG pos. wrt mac l.e., Xcg_adim
+
+AERODYNAMICS
+    A/C NEUTRAL POINT
+    0.45           Normalized Neutral point pos. wrt mac l.e., Xn_adim
+    MISC (Wing, downwash, etc)
+    4.10           Wing CL_alpha (1/rad)
+    0.0180         Downwash at alpha_B=0 (rad)
+    0.360          Downwash gradient Deps/Dalpha
+    POLAR
+    0.060	   CD0 in the parabolic polar: CD = CD0 + K*(CL)^m
+    0.35           K in the parabolic polar
+    2              m in the parabolic polar
+    AERODYNAMIC DERIVATIVES
+    4.18           CL_alpha (1/rad)
+    0.290          CL_delta_e (1/rad)
+    0.520          CL_delta_s (1/rad)
+    2.27           CL_alpha_dot (1/rad)
+    4.72           CL_q (1/rad)
+   -0.0200         Cm(CL=0)
+   -0.510          Cm_delta_e (1/rad)
+   -0.920          Cm_delta_s (1/rad)
+   -4.00           Cm_alpha_dot (1/rad)
+   -8.34           Cm_q (1/rad)
+    0.00           Cm_delta_e_dot (1/rad)
+
+ELEVATOR DATA
+    GEOMETRY
+    1.160          Reference surface, S_e (m^2)
+    0.174          Hinge axis sweep angle, Lambda_e (rad)
+   -3.300          Coord. along x-body of elev.-fixed ref. frame origin, x_C_e (m)
+    0.4200         Elevator mean aerod. chord, mac_e (m)
+    MASS/INERTIA
+    50             Elevator mass, mass_e (kg)
+    0.000          Offset of elev. CG wrt elev. mac
+    0.09000        Elevator inertia gyration radius around hinge, k_e, (m)
+    AERODYNAMICS
+    0.0            Ch_e_0
+   -0.130          Ch_e_alpha (1/rad)
+   -0.110          Ch_e_delta_s (1/rad)
+   -0.300          Ch_e_delta_e (1/rad)
+   -0.550          Ch_e_delta_tab (1/rad)
+   -1.00           Ch_e_delta_e_dot (1/rad)
+   -1.00           Ch_e_q (1/rad)
+   -0.500          Ch_e_alpha_dot (1/rad)
+
+ELEVATOR COMMAND CHARACTERISTICS
+    TYPE
+    reversible
+    0.208          Stick sensitivity ratio, Rs_e (push/pull)
+    0.400          Gearing ratio, i.e. stick displ./delta_e, Rg_e (m/rad)
+    0.0830         Linkage mechanical friction (N m/(deg/s))
+    ELEVATOR ANGULAR RANGE
+    0.523          Max angle, push-over-wise, delta_e_max (rad)
+   -0.523          Min angle, pull-up-wise, delta_e_min (rad)
+
+PROPULSION DATA
+7530     Thrust, T (kg-force)
+0.0      Cm_T_0
+0.0      Cm_T_alpha
+0.00     Setting angle wrt x-body axis, mu_T (rad)
+
+AERODYNAMIC/STRUCTURAL LIMITATIONS
+0.850    Max CL, CL_max
+-0.750   Min CL, CL_min
+7.80     Max load factor, n_max
+-4.50    Min load factor, n_min
+
+STICK-FORCE LIMITATIONS
+75.000   Max push force (kg-force)
+-75.000  Max pull force (kg-force)
+--------------------------------------------------------------------

@@ -1,0 +1,24 @@
+--------------------------------------------------------------------
+VELIVOLO DESCRITTO NELLE TABELLE A PAGINA 18 QUADERNO 7
+--------------------------------------------------------------------
+
+A/C MAIN GEOMETRIC DATA
+400.0     Wing planform area, S, (ft^2)
+32.42     Wing span, b, (ft)
+11.52     Mean aerodynamic chord, mac, (ft)
+
+MASS AND INERTIA
+1036      Mass, mass (slug)
+23000     Inertia, [Ixx]_B (slug ft^2)
+151293    Inertia, [Iyy]_B (slug ft^2)
+169945    Inertia, [Izz]_B (slug ft^2)
+0         Inertia, [Ixy]_B (slug ft^2)
+0         Inertia, [Ixz]_B (slug ft^2)
+0         Inertia, [Iyz]_B (slug ft^2)
+
+PROPULSION DATA
+11200     Max Thrust available at sea level, T_max_SL (lbf)
+0.000     Orthogonal distance thrust axis wrt x-body axis, e_T (ft)
+0.00      Setting angle wrt x-body axis, mu_T (rad)
+
+--------------------------------------------------------------------
